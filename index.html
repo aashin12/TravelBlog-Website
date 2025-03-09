@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Blog</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Video Banner */
+        .video-header {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #video-banner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        /* Sticky Navbar */
+        .navbar {
+            position: fixed;
+            /* Sticky effect */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s ease-in-out, padding 0.3s ease-in-out;
+            padding: 15px 0;
+            /* Normal padding */
+        }
+
+        /* Navbar Transparent on Home Section */
+        .navbar-transparent {
+            background-color: transparent !important;
+        }
+
+        /* Navbar with Blue Shade on Scroll */
+        .navbar-scrolled {
+            background-color: rgba(17, 18, 20, 0.9) !important;
+            /* Bootstrap primary blue */
+            padding: 10px 0;
+            /* Reduce padding when scrolled */
+        }
+
+        /* Navbar Font Size */
+        .navbar-brand {
+            font-size: 2rem;
+            /* Increased font size */
+            font-weight: bold;
+        }
+
+        .nav-link {
+            font-size: 1.3rem;
+            /* Increased font size */
+            font-weight: 500;
+        }
+
+        /* Video Overlay */
+        .video-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 1;
+        }
+
+        .video-overlay h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        .video-overlay p {
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Featured Posts Section */
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 40px;
+        }
+
+        /* Add spacing for content so navbar doesn't overlap */
+        .content-section {
+            padding-top: 80px;
+            /* To compensate for the sticky navbar */
+        }
+
+        /* Featured Travel Posts */
+        .post-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .post-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+            border-radius: 10px;
+        }
+
+        /* Image Zoom Effect */
+        .post-card:hover .post-img {
+            transform: scale(1.1);
+        }
+
+        /* Title Positioned at Bottom of Image */
+        .post-title {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        /* Travel Story Cards */
+        .travel-card {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .travel-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Card Image */
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* Card Body */
+        .card-body {
+            padding: 15px;
+        }
+
+        /* Card Title */
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Card Text */
+        .card-text {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        /* Read More Link */
+        .read-more {
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer Styling */
+        .footer {
+            background: #222;
+            color: white;
+        }
+
+        .footer h5 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .footer p {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        /* Footer Links */
+        .footer-link {
+            color: #bbb;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .footer-link:hover {
+            color: #007bff;
+        }
+
+        /* Social Media Icons */
+        .social-icon {
+            font-size: 1.5rem;
+            color: #bbb;
+            margin-right: 10px;
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Video Banner with Navbar Inside -->
+    <header class="video-header">
+        <video autoplay muted loop id="video-banner">
+            <source src="./banner.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <!-- Sticky Navigation Menu -->
+        <nav id="navbar" class="navbar navbar-expand-lg navbar-dark navbar-transparent">
+            <div class="container">
+                <a class="navbar-brand" href="#">Travel Blog</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="./index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#blog">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./destination.html">Destinations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./about.html">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./contact.html">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="video-overlay">
+            <h1 class="display-4">Explore the World</h1>
+            <p class="lead">Discover amazing destinations and share your travel stories with us.</p>
+        </div>
+    </header>
+
+    <!-- featured post section -->
+    <section class="container my-5 content-section" id="blog">
+        <h2 class="text-center mb-4">Featured Travel Posts</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="post-card">
+                    <img src="./homepost1.png" class="post-img" alt="Post Image 1">
+                    <div class="post-title">10 Must-Visit Destinations</div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="post-card">
+                    <img src="./homepost2.png" class="post-img" alt="Post Image 2">
+                    <div class="post-title">From Sunrise to Sunset</div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="post-card">
+                    <img src="./homepost3.png" class="post-img" alt="Post Image 3">
+                    <div class="post-title">Wanderlust Wonders</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- latest travel post -->
+    <section class="container my-5 content-section">
+        <h2 class="text-center mb-4">Latest Travel Stories</h2>
+        <div class="row">
+            <!-- Post 1 -->
+            <div class="col-md-4 mb-4">
+                <div class="travel-card">
+                    <img src="./homepost4.png" class="card-img" alt="Post Image 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Exploring the Mountains</h5>
+                        <p class="card-text">
+                            Experience the thrill of breathtaking mountain landscapes, from snow-capped peaks to lush
+                            green valleys.
+                            Whether you're an avid trekker or just seeking a peaceful escape, these towering wonders
+                            offer an unforgettable adventure.
+                            Discover hidden trails, picturesque villages, and the serenity of nature at its finest.
+                        </p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Post 2 -->
+            <div class="col-md-4 mb-4">
+                <div class="travel-card">
+                    <img src="./homepost5.png" class="card-img" alt="Post Image 2">
+                    <div class="card-body">
+                        <h5 class="card-title">A Walk Through History</h5>
+                        <p class="card-text">
+                            Journey through time as you explore ancient ruins, majestic castles, and historical
+                            landmarks that tell the stories of past civilizations.
+                            From the towering pyramids of Egypt to the cobbled streets of Rome, these destinations offer
+                            a glimpse into the richness of our heritage.
+                            Every brick and monument holds a fascinating tale waiting to be discovered.
+                        </p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Post 3 -->
+            <div class="col-md-4 mb-4">
+                <div class="travel-card">
+                    <img src="./homepost6.png" class="card-img" alt="Post Image 3">
+                    <div class="card-body">
+                        <h5 class="card-title">The Ultimate Beach Getaway</h5>
+                        <p class="card-text">
+                            Escape to the world's most beautiful beaches, where crystal-clear waters meet soft golden
+                            sands.
+                            Whether you're looking for a romantic retreat, an adventure-filled watersports destination,
+                            or a place to relax under the sun,
+                            these coastal paradises have something for everyone. Soak in the beauty of tropical bliss
+                            like never before.
+                        </p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-white pt-4">
+        <div class="container">
+            <div class="row">
+                <!-- Quick Links -->
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="./index.html" class="footer-link">Home</a></li>
+                        <li><a href="./index.html" class="footer-link">Blog</a></li>
+                        <li><a href="./destination.html" class="footer-link">Destinations</a></li>
+                        <li><a href="./about.html" class="footer-link">About</a></li>
+                        <li><a href="./contact.html" class="footer-link">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <p><i class="fas fa-envelope"></i> contact@travelblog.com</p>
+                    <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Travel Street, Adventure City</p>
+                </div>
+
+                <!-- Social Media -->
+                <div class="col-md-4">
+                    <h5>Follow Us</h5>
+                    <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <hr class="mt-4">
+            <p class="text-center">&copy; 2025 Travel Blog. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const navbar = document.querySelector(".navbar");
+
+            window.addEventListener("scroll", function () {
+                if (window.scrollY > 50) {
+                    navbar.classList.remove("navbar-transparent");
+                    navbar.classList.add("navbar-scrolled");
+                } else {
+                    navbar.classList.remove("navbar-scrolled");
+                    navbar.classList.add("navbar-transparent");
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
